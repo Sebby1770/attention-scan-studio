@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Attention Scan</title>
+    <meta
+      name="description"
+      content="Attention Scan turns GitHub pressure into a visual radar of what needs action next."
+    >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Syne:wght@500;700;800&display=swap"
+      rel="stylesheet"
+    >
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <div class="noise" aria-hidden="true"></div>
+    <div class="orb orb-a" aria-hidden="true"></div>
+    <div class="orb orb-b" aria-hidden="true"></div>
+    <div class="grid-glow" aria-hidden="true"></div>
+
+    <header class="shell hero">
+      <nav class="topbar">
+        <span class="brand-mark">A/S</span>
+        <div class="topbar-links">
+          <a href="#radar">Radar</a>
+          <a href="#architecture">Architecture</a>
+          <a href="#flow">Flow</a>
+        </div>
+      </nav>
+
+      <div class="hero-copy">
+        <p class="eyebrow">GitHub attention intelligence</p>
+        <h1>Attention Scan turns repo chaos into a signal field.</h1>
+        <p class="lede">
+          A sharp dashboard for pull requests, issue drift, and CI breakage. The frontend is visual and atmospheric.
+          The backend is modular, scored, and reusable from both local preview and GitHub Actions.
+        </p>
+
+        <div class="hero-actions">
+          <a class="button button-solid" href="#radar">Open the radar</a>
+          <a class="button button-ghost" href="#architecture">See the stack</a>
+        </div>
+      </div>
+
+      <section class="hero-panel">
+        <div class="hero-panel-head">
+          <span>Live tone</span>
+          <span id="report-mode">Loading</span>
+        </div>
+        <div class="spectrum">
+          <div class="spectrum-ring ring-outer"></div>
+          <div class="spectrum-ring ring-mid"></div>
+          <div class="spectrum-ring ring-inner"></div>
+          <div class="signal-dot signal-critical"></div>
+          <div class="signal-dot signal-high"></div>
+          <div class="signal-dot signal-medium"></div>
+        </div>
+        <div class="signal-caption" id="signal-caption">Preparing the signal field.</div>
+      </section>
+    </header>
+
+    <main class="shell">
+      <section class="metrics" id="radar" aria-labelledby="metrics-title">
+        <div class="section-heading">
+          <p class="eyebrow">Radar</p>
+          <h2 id="metrics-title">What needs attention right now</h2>
+        </div>
+        <div class="metric-grid" id="metric-grid"></div>
+      </section>
+
+      <section class="priority-layout">
+        <article class="panel top-actions-panel">
+          <div class="panel-head">
+            <p class="eyebrow">Top actions</p>
+            <h3>First moves with the highest leverage</h3>
+          </div>
+          <div class="stack" id="top-actions"></div>
+        </article>
+
+        <article class="panel insights-panel">
+          <div class="panel-head">
+            <p class="eyebrow">Signal read</p>
+            <h3>Interpretation layer</h3>
+          </div>
+          <div class="stack compact" id="insights"></div>
+        </article>
+      </section>
+
+      <section class="section-stack" id="sections"></section>
+
+      <section class="architecture" id="architecture">
+        <div class="section-heading">
+          <p class="eyebrow">Architecture</p>
+          <h2>Front-end mood, back-end discipline</h2>
+        </div>
+
+        <div class="architecture-grid">
+          <article class="panel feature-card">
+            <h3>Abstract presentation layer</h3>
+            <p>
+              The site uses layered gradients, animated signal rings, intentional typography, and sectioned cards so the
+              repo state feels designed instead of dumped.
+            </p>
+          </article>
+
+          <article class="panel feature-card">
+            <h3>Reusable scan engine</h3>
+            <p>
+              GitHub scanning now lives in JavaScript modules, not inside workflow YAML. The same scoring logic powers
+              local previews, stored JSON, markdown reports, and issue updates.
+            </p>
+          </article>
+
+          <article class="panel feature-card">
+            <h3>Static and dynamic paths</h3>
+            <p>
+              The dashboard reads generated JSON for GitHub Pages, and the local server can also expose a live API route
+              when credentials are available.
+            </p>
+          </article>
+
+          <article class="panel feature-card">
+            <h3>Workflow-backed publishing</h3>
+            <p>
+              The scan workflow refreshes report data, uploads artifacts, and can keep the public-facing dashboard current
+              without manual editing.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="flow" id="flow">
+        <div class="section-heading">
+          <p class="eyebrow">Flow</p>
+          <h2>How the system moves</h2>
+        </div>
+
+        <div class="flow-steps">
+          <article class="flow-step">
+            <span>01</span>
+            <h3>Scan</h3>
+            <p>Pull requests, issues, reviews, check runs, and workflow failures are pulled into one normalized model.</p>
+          </article>
+          <article class="flow-step">
+            <span>02</span>
+            <h3>Score</h3>
+            <p>Each item gets severity, age pressure, section routing, and a next action instead of raw API noise.</p>
+          </article>
+          <article class="flow-step">
+            <span>03</span>
+            <h3>Render</h3>
+            <p>The generated JSON drives a dashboard that feels more like a control room than a spreadsheet.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="shell footer">
+      <p>Attention Scan</p>
+      <p id="footer-meta">Waiting for report data.</p>
+    </footer>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

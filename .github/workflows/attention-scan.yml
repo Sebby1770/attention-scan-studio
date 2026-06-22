@@ -1,0 +1,65 @@
+name: Attention Scan
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 23 * * 0-4"
+
+concurrency:
+  group: attention-scan-${{ github.repository }}
+  cancel-in-progress: false
+
+permissions:
+  actions: read
+  checks: read
+  contents: write
+  issues: write
+  pull-requests: read
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Run attention scan
+        run: node scripts/run-scan.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          WRITE_REPORT_ISSUE: "true"
+          REPORT_TITLE: Attention Scan Report
+          REPORT_LABEL: automation
+          STALE_DAYS: "7"
+          REVIEW_GRACE_DAYS: "3"
+          TRIAGE_DAYS: "2"
+          FAILED_RUN_LIMIT: "10"
+
+      - name: Upload report artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: attention-scan-report
+          path: |
+            artifacts/attention-report.md
+            public/data/latest-report.json
+
+      - name: Commit refreshed report
+        run: |
+          if git diff --quiet -- public/data/latest-report.json; then
+            echo "No report changes to commit."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/latest-report.json
+          git commit -m "chore: refresh attention report"
+          git push

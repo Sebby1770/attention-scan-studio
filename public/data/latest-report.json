@@ -1,0 +1,144 @@
+{
+  "meta": {
+    "repository": "owner/repo",
+    "generatedAt": "2026-06-22T02:27:06.568Z",
+    "mode": "demo",
+    "source": "No live GitHub credentials were provided, so a demo report was generated."
+  },
+  "summary": "No live GitHub credentials were provided, so a demo report was generated.",
+  "metrics": {
+    "openPullRequests": 6,
+    "openIssues": 14,
+    "immediateCount": 1,
+    "reviewQueueCount": 1,
+    "issueTriageCount": 1,
+    "workflowFailureCount": 1,
+    "staleCount": 1
+  },
+  "topActions": [
+    {
+      "id": "demo-pr-failing",
+      "title": "PR #27 · Refactor score normalizer",
+      "summary": "Checks are failing in the deploy lane, so the main path is red.",
+      "section": "immediateAction",
+      "severity": "critical",
+      "score": 103,
+      "url": "https://github.com/Sebby1770/attention-scan/pull/27",
+      "nextAction": "Fix the failing deploy workflow before merging anything behind it.",
+      "ageDays": 1,
+      "area": "pull_request"
+    },
+    {
+      "id": "demo-review-queue",
+      "title": "PR #24 · Add repo score timeline",
+      "summary": "Review is waiting with @design-review and has already cooled off.",
+      "section": "reviewQueue",
+      "severity": "high",
+      "score": 90,
+      "url": "https://github.com/Sebby1770/attention-scan/pull/24",
+      "nextAction": "Nudge the reviewer or reassign to someone who can unblock it today.",
+      "ageDays": 4,
+      "area": "pull_request"
+    },
+    {
+      "id": "demo-workflow-failure",
+      "title": "Preview Deploy · feature/orbit-header",
+      "summary": "Preview deploy failed and the branch is blocked from visual review.",
+      "section": "workflowFailures",
+      "severity": "high",
+      "score": 84,
+      "url": "https://github.com/Sebby1770/attention-scan/actions/runs/1",
+      "nextAction": "Open the preview logs and fix the first production-facing break.",
+      "ageDays": 2,
+      "area": "workflow"
+    },
+    {
+      "id": "demo-issue-triage",
+      "title": "Issue #18 · Export PDF digest",
+      "summary": "The issue is unassigned and old enough to be backlog drift instead of active work.",
+      "section": "issueTriage",
+      "severity": "medium",
+      "score": 61,
+      "url": "https://github.com/Sebby1770/attention-scan/issues/18",
+      "nextAction": "Assign ownership or explicitly move it out of the current cycle.",
+      "ageDays": 3,
+      "area": "issue"
+    }
+  ],
+  "sections": {
+    "immediateAction": [
+      {
+        "id": "demo-pr-failing",
+        "title": "PR #27 · Refactor score normalizer",
+        "summary": "Checks are failing in the deploy lane, so the main path is red.",
+        "section": "immediateAction",
+        "severity": "critical",
+        "score": 103,
+        "url": "https://github.com/Sebby1770/attention-scan/pull/27",
+        "nextAction": "Fix the failing deploy workflow before merging anything behind it.",
+        "ageDays": 1,
+        "area": "pull_request"
+      }
+    ],
+    "reviewQueue": [
+      {
+        "id": "demo-review-queue",
+        "title": "PR #24 · Add repo score timeline",
+        "summary": "Review is waiting with @design-review and has already cooled off.",
+        "section": "reviewQueue",
+        "severity": "high",
+        "score": 90,
+        "url": "https://github.com/Sebby1770/attention-scan/pull/24",
+        "nextAction": "Nudge the reviewer or reassign to someone who can unblock it today.",
+        "ageDays": 4,
+        "area": "pull_request"
+      }
+    ],
+    "issueTriage": [
+      {
+        "id": "demo-issue-triage",
+        "title": "Issue #18 · Export PDF digest",
+        "summary": "The issue is unassigned and old enough to be backlog drift instead of active work.",
+        "section": "issueTriage",
+        "severity": "medium",
+        "score": 61,
+        "url": "https://github.com/Sebby1770/attention-scan/issues/18",
+        "nextAction": "Assign ownership or explicitly move it out of the current cycle.",
+        "ageDays": 3,
+        "area": "issue"
+      }
+    ],
+    "workflowFailures": [
+      {
+        "id": "demo-workflow-failure",
+        "title": "Preview Deploy · feature/orbit-header",
+        "summary": "Preview deploy failed and the branch is blocked from visual review.",
+        "section": "workflowFailures",
+        "severity": "high",
+        "score": 84,
+        "url": "https://github.com/Sebby1770/attention-scan/actions/runs/1",
+        "nextAction": "Open the preview logs and fix the first production-facing break.",
+        "ageDays": 2,
+        "area": "workflow"
+      }
+    ],
+    "staleWork": [
+      {
+        "id": "demo-stale",
+        "title": "Issue #11 · Repo theming presets",
+        "summary": "This issue has gone quiet long enough that it needs an explicit decision.",
+        "section": "staleWork",
+        "severity": "low",
+        "score": 46,
+        "url": "https://github.com/Sebby1770/attention-scan/issues/11",
+        "nextAction": "Close it or fold it into an active milestone.",
+        "ageDays": 11,
+        "area": "issue"
+      }
+    ]
+  },
+  "insights": [
+    "1 high-pressure signal(s) are sitting above the line right now.",
+    "CI is contributing active friction and should be cleared before queue depth grows."
+  ]
+}
