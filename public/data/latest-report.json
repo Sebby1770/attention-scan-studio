@@ -1,144 +1,79 @@
 {
   "meta": {
-    "repository": "owner/repo",
-    "generatedAt": "2026-06-22T02:27:06.568Z",
-    "mode": "demo",
-    "source": "No live GitHub credentials were provided, so a demo report was generated."
+    "repository": "Sebby1770/attention-scan-studio",
+    "generatedAt": "2026-06-22T02:30:36.922Z",
+    "mode": "live",
+    "source": "GitHub REST API"
   },
-  "summary": "No live GitHub credentials were provided, so a demo report was generated.",
+  "summary": "Found 2 attention item(s) across pull requests, issues, and workflows.",
   "metrics": {
-    "openPullRequests": 6,
-    "openIssues": 14,
-    "immediateCount": 1,
-    "reviewQueueCount": 1,
-    "issueTriageCount": 1,
-    "workflowFailureCount": 1,
-    "staleCount": 1
+    "openPullRequests": 0,
+    "openIssues": 0,
+    "immediateCount": 0,
+    "reviewQueueCount": 0,
+    "issueTriageCount": 0,
+    "workflowFailureCount": 2,
+    "staleCount": 0
   },
   "topActions": [
     {
-      "id": "demo-pr-failing",
-      "title": "PR #27 · Refactor score normalizer",
-      "summary": "Checks are failing in the deploy lane, so the main path is red.",
-      "section": "immediateAction",
-      "severity": "critical",
-      "score": 103,
-      "url": "https://github.com/Sebby1770/attention-scan/pull/27",
-      "nextAction": "Fix the failing deploy workflow before merging anything behind it.",
-      "ageDays": 1,
-      "area": "pull_request"
-    },
-    {
-      "id": "demo-review-queue",
-      "title": "PR #24 · Add repo score timeline",
-      "summary": "Review is waiting with @design-review and has already cooled off.",
-      "section": "reviewQueue",
-      "severity": "high",
-      "score": 90,
-      "url": "https://github.com/Sebby1770/attention-scan/pull/24",
-      "nextAction": "Nudge the reviewer or reassign to someone who can unblock it today.",
-      "ageDays": 4,
-      "area": "pull_request"
-    },
-    {
-      "id": "demo-workflow-failure",
-      "title": "Preview Deploy · feature/orbit-header",
-      "summary": "Preview deploy failed and the branch is blocked from visual review.",
+      "id": "workflow-27925802382",
+      "title": "Deploy Pages · main",
+      "summary": "The run failed on push and has been sitting for 0 days.",
       "section": "workflowFailures",
       "severity": "high",
-      "score": 84,
-      "url": "https://github.com/Sebby1770/attention-scan/actions/runs/1",
-      "nextAction": "Open the preview logs and fix the first production-facing break.",
-      "ageDays": 2,
+      "score": 78,
+      "url": "https://github.com/Sebby1770/attention-scan-studio/actions/runs/27925802382",
+      "nextAction": "Open the failed workflow and clear the first red job.",
+      "ageDays": 0,
       "area": "workflow"
     },
     {
-      "id": "demo-issue-triage",
-      "title": "Issue #18 · Export PDF digest",
-      "summary": "The issue is unassigned and old enough to be backlog drift instead of active work.",
-      "section": "issueTriage",
-      "severity": "medium",
-      "score": 61,
-      "url": "https://github.com/Sebby1770/attention-scan/issues/18",
-      "nextAction": "Assign ownership or explicitly move it out of the current cycle.",
-      "ageDays": 3,
-      "area": "issue"
+      "id": "workflow-27925788840",
+      "title": "Deploy Pages · main",
+      "summary": "The run failed on push and has been sitting for 0 days.",
+      "section": "workflowFailures",
+      "severity": "high",
+      "score": 78,
+      "url": "https://github.com/Sebby1770/attention-scan-studio/actions/runs/27925788840",
+      "nextAction": "Open the failed workflow and clear the first red job.",
+      "ageDays": 0,
+      "area": "workflow"
     }
   ],
   "sections": {
-    "immediateAction": [
-      {
-        "id": "demo-pr-failing",
-        "title": "PR #27 · Refactor score normalizer",
-        "summary": "Checks are failing in the deploy lane, so the main path is red.",
-        "section": "immediateAction",
-        "severity": "critical",
-        "score": 103,
-        "url": "https://github.com/Sebby1770/attention-scan/pull/27",
-        "nextAction": "Fix the failing deploy workflow before merging anything behind it.",
-        "ageDays": 1,
-        "area": "pull_request"
-      }
-    ],
-    "reviewQueue": [
-      {
-        "id": "demo-review-queue",
-        "title": "PR #24 · Add repo score timeline",
-        "summary": "Review is waiting with @design-review and has already cooled off.",
-        "section": "reviewQueue",
-        "severity": "high",
-        "score": 90,
-        "url": "https://github.com/Sebby1770/attention-scan/pull/24",
-        "nextAction": "Nudge the reviewer or reassign to someone who can unblock it today.",
-        "ageDays": 4,
-        "area": "pull_request"
-      }
-    ],
-    "issueTriage": [
-      {
-        "id": "demo-issue-triage",
-        "title": "Issue #18 · Export PDF digest",
-        "summary": "The issue is unassigned and old enough to be backlog drift instead of active work.",
-        "section": "issueTriage",
-        "severity": "medium",
-        "score": 61,
-        "url": "https://github.com/Sebby1770/attention-scan/issues/18",
-        "nextAction": "Assign ownership or explicitly move it out of the current cycle.",
-        "ageDays": 3,
-        "area": "issue"
-      }
-    ],
+    "immediateAction": [],
+    "reviewQueue": [],
+    "issueTriage": [],
     "workflowFailures": [
       {
-        "id": "demo-workflow-failure",
-        "title": "Preview Deploy · feature/orbit-header",
-        "summary": "Preview deploy failed and the branch is blocked from visual review.",
+        "id": "workflow-27925802382",
+        "title": "Deploy Pages · main",
+        "summary": "The run failed on push and has been sitting for 0 days.",
         "section": "workflowFailures",
         "severity": "high",
-        "score": 84,
-        "url": "https://github.com/Sebby1770/attention-scan/actions/runs/1",
-        "nextAction": "Open the preview logs and fix the first production-facing break.",
-        "ageDays": 2,
+        "score": 78,
+        "url": "https://github.com/Sebby1770/attention-scan-studio/actions/runs/27925802382",
+        "nextAction": "Open the failed workflow and clear the first red job.",
+        "ageDays": 0,
+        "area": "workflow"
+      },
+      {
+        "id": "workflow-27925788840",
+        "title": "Deploy Pages · main",
+        "summary": "The run failed on push and has been sitting for 0 days.",
+        "section": "workflowFailures",
+        "severity": "high",
+        "score": 78,
+        "url": "https://github.com/Sebby1770/attention-scan-studio/actions/runs/27925788840",
+        "nextAction": "Open the failed workflow and clear the first red job.",
+        "ageDays": 0,
         "area": "workflow"
       }
     ],
-    "staleWork": [
-      {
-        "id": "demo-stale",
-        "title": "Issue #11 · Repo theming presets",
-        "summary": "This issue has gone quiet long enough that it needs an explicit decision.",
-        "section": "staleWork",
-        "severity": "low",
-        "score": 46,
-        "url": "https://github.com/Sebby1770/attention-scan/issues/11",
-        "nextAction": "Close it or fold it into an active milestone.",
-        "ageDays": 11,
-        "area": "issue"
-      }
-    ]
+    "staleWork": []
   },
   "insights": [
-    "1 high-pressure signal(s) are sitting above the line right now.",
     "CI is contributing active friction and should be cleared before queue depth grows."
   ]
 }
