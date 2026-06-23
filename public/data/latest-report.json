@@ -1,14 +1,14 @@
 {
   "meta": {
     "repository": "Sebby1770/attention-scan-studio",
-    "generatedAt": "2026-06-22T02:30:36.922Z",
+    "generatedAt": "2026-06-23T00:15:58.212Z",
     "mode": "live",
     "source": "GitHub REST API"
   },
   "summary": "Found 2 attention item(s) across pull requests, issues, and workflows.",
   "metrics": {
     "openPullRequests": 0,
-    "openIssues": 0,
+    "openIssues": 1,
     "immediateCount": 0,
     "reviewQueueCount": 0,
     "issueTriageCount": 0,
