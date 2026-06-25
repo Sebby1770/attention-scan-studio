@@ -1,7 +1,7 @@
 {
   "meta": {
     "repository": "Sebby1770/attention-scan-studio",
-    "generatedAt": "2026-06-24T00:04:32.613Z",
+    "generatedAt": "2026-06-25T00:18:54.102Z",
     "mode": "live",
     "source": "GitHub REST API"
   },
@@ -19,25 +19,25 @@
     {
       "id": "workflow-27925802382",
       "title": "Deploy Pages · main",
-      "summary": "The run failed on push and has been sitting for 1 day.",
+      "summary": "The run failed on push and has been sitting for 2 days.",
       "section": "workflowFailures",
       "severity": "high",
-      "score": 81,
+      "score": 84,
       "url": "https://github.com/Sebby1770/attention-scan-studio/actions/runs/27925802382",
       "nextAction": "Open the failed workflow and clear the first red job.",
-      "ageDays": 1,
+      "ageDays": 2,
       "area": "workflow"
     },
     {
       "id": "workflow-27925788840",
       "title": "Deploy Pages · main",
-      "summary": "The run failed on push and has been sitting for 1 day.",
+      "summary": "The run failed on push and has been sitting for 2 days.",
       "section": "workflowFailures",
       "severity": "high",
-      "score": 81,
+      "score": 84,
       "url": "https://github.com/Sebby1770/attention-scan-studio/actions/runs/27925788840",
       "nextAction": "Open the failed workflow and clear the first red job.",
-      "ageDays": 1,
+      "ageDays": 2,
       "area": "workflow"
     }
   ],
@@ -49,25 +49,25 @@
       {
         "id": "workflow-27925802382",
         "title": "Deploy Pages · main",
-        "summary": "The run failed on push and has been sitting for 1 day.",
+        "summary": "The run failed on push and has been sitting for 2 days.",
         "section": "workflowFailures",
         "severity": "high",
-        "score": 81,
+        "score": 84,
         "url": "https://github.com/Sebby1770/attention-scan-studio/actions/runs/27925802382",
         "nextAction": "Open the failed workflow and clear the first red job.",
-        "ageDays": 1,
+        "ageDays": 2,
         "area": "workflow"
       },
       {
         "id": "workflow-27925788840",
         "title": "Deploy Pages · main",
-        "summary": "The run failed on push and has been sitting for 1 day.",
+        "summary": "The run failed on push and has been sitting for 2 days.",
         "section": "workflowFailures",
         "severity": "high",
-        "score": 81,
+        "score": 84,
         "url": "https://github.com/Sebby1770/attention-scan-studio/actions/runs/27925788840",
         "nextAction": "Open the failed workflow and clear the first red job.",
-        "ageDays": 1,
+        "ageDays": 2,
         "area": "workflow"
       }
     ],
