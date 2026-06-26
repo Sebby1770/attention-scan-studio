@@ -6,9 +6,14 @@ const sectionTitles = {
   staleWork: "Stale Work",
 };
 
-async function loadReport() {
-  const candidates = ["./data/latest-report.json", "./api/report", "./data/demo-report.json"];
+const severityOptions = ["all", "critical", "high", "medium", "low"];
+const state = {
+  report: null,
+  changelog: { releases: [] },
+  severity: "all",
+};
 
+async function loadJson(candidates) {
   for (const candidate of candidates) {
     try {
       const response = await fetch(candidate);
@@ -18,16 +23,39 @@ async function loadReport() {
 
       return await response.json();
     } catch {
-      // Move to the next candidate.
+      // Try the next source.
     }
   }
 
-  throw new Error("No report source could be loaded.");
+  return null;
+}
+
+async function loadReport() {
+  const report = await loadJson(["./data/latest-report.json", "./api/report", "./data/demo-report.json"]);
+
+  if (!report) {
+    throw new Error("No report source could be loaded.");
+  }
+
+  return report;
+}
+
+async function loadChangelog() {
+  return (await loadJson(["./data/changelog.json"])) || { releases: [] };
 }
 
 function metricCard(label, value) {
   return `
     <article class="metric-card">
+      <span>${label}</span>
+      <strong>${value}</strong>
+    </article>
+  `;
+}
+
+function statusCard(label, value, tone = "") {
+  return `
+    <article class="status-card ${tone}">
       <span>${label}</span>
       <strong>${value}</strong>
     </article>
@@ -47,10 +75,33 @@ function signalCard(item) {
   `;
 }
 
+function filterButton(severity, activeSeverity) {
+  const isActive = severity === activeSeverity;
+  const label = severity === "all" ? "All signals" : severity;
+
+  return `
+    <button class="filter-chip ${isActive ? "active" : ""}" data-severity="${severity}">
+      ${label}
+    </button>
+  `;
+}
+
 function insightCard(text) {
   return `
     <article class="insight-card">
       <p>${text}</p>
+    </article>
+  `;
+}
+
+function releaseCard(release) {
+  const items = release.items.map((item) => `<li>${item}</li>`).join("");
+
+  return `
+    <article class="release-card">
+      <span>${release.version} · ${release.date}</span>
+      <h4>${release.title}</h4>
+      <ul>${items}</ul>
     </article>
   `;
 }
@@ -78,12 +129,45 @@ function sectionPanel(key, items) {
   `;
 }
 
-function render(report) {
-  document.querySelector("#report-mode").textContent = report.meta.mode.toUpperCase();
+function filterItems(items) {
+  if (state.severity === "all") {
+    return items;
+  }
+
+  return items.filter((item) => item.severity === state.severity);
+}
+
+function filteredSections(report) {
+  return Object.fromEntries(
+    Object.entries(report.sections).map(([key, items]) => [key, filterItems(items)]),
+  );
+}
+
+function bindFilters() {
+  document.querySelectorAll(".filter-chip").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.severity = button.dataset.severity;
+      render();
+    });
+  });
+}
+
+function render() {
+  const { report, changelog } = state;
+  const sections = filteredSections(report);
+  const filteredTopActions = filterItems(report.topActions);
+  const visibleCount = Object.values(sections).reduce((total, items) => total + items.length, 0);
+  const severityLabel = state.severity === "all" ? "all signals" : `${state.severity} signals`;
+  const severityBreakdown = report.metrics.severityBreakdown || { critical: 0, high: 0, medium: 0, low: 0 };
+  const pulse = report.meta.pulse || "watch";
+
+  document.querySelector("#report-mode").textContent = `${report.meta.mode.toUpperCase()} / ${pulse.toUpperCase()}`;
   document.querySelector("#signal-caption").textContent = report.summary;
   document.querySelector("#footer-meta").textContent = `${report.meta.repository} · ${new Date(
     report.meta.generatedAt,
   ).toLocaleString()}`;
+  document.querySelector("#repo-link").href = `https://github.com/${report.meta.repository}`;
+  document.querySelector("#filter-caption").textContent = `Showing ${severityLabel}. ${visibleCount} item(s) currently match this view.`;
 
   document.querySelector("#metric-grid").innerHTML = [
     metricCard("Open PRs", report.metrics.openPullRequests),
@@ -92,23 +176,45 @@ function render(report) {
     metricCard("Review queue", report.metrics.reviewQueueCount),
     metricCard("Workflow failures", report.metrics.workflowFailureCount),
     metricCard("Stale work", report.metrics.staleCount),
+    metricCard("Total attention", report.metrics.totalAttentionCount ?? visibleCount),
+    metricCard("Suppressed failures", report.metrics.suppressedWorkflowFailures ?? 0),
   ].join("");
 
-  document.querySelector("#top-actions").innerHTML = report.topActions.length
-    ? report.topActions.map(signalCard).join("")
-    : '<article class="signal-card low"><h4>Signal field is clean</h4><p>No high-pressure actions were returned.</p></article>';
+  document.querySelector("#filter-row").innerHTML = severityOptions
+    .map((severity) => filterButton(severity, state.severity))
+    .join("");
+  bindFilters();
+
+  document.querySelector("#status-ribbon").innerHTML = [
+    statusCard("Pulse", pulse, pulse),
+    statusCard("Source", report.meta.source),
+    statusCard("Critical", severityBreakdown.critical, "critical"),
+    statusCard("High", severityBreakdown.high, "high"),
+  ].join("");
+
+  document.querySelector("#top-actions").innerHTML = filteredTopActions.length
+    ? filteredTopActions.map(signalCard).join("")
+    : '<article class="signal-card low"><h4>Signal field is clean</h4><p>No high-pressure actions were returned in this filter.</p></article>';
 
   document.querySelector("#insights").innerHTML = (report.insights || [])
     .map(insightCard)
     .join("");
 
-  document.querySelector("#sections").innerHTML = Object.entries(report.sections)
+  document.querySelector("#sections").innerHTML = Object.entries(sections)
     .map(([key, items]) => sectionPanel(key, items))
+    .join("");
+
+  document.querySelector("#release-list").innerHTML = (changelog.releases || [])
+    .map(releaseCard)
     .join("");
 }
 
-loadReport()
-  .then(render)
+Promise.all([loadReport(), loadChangelog()])
+  .then(([report, changelog]) => {
+    state.report = report;
+    state.changelog = changelog;
+    render();
+  })
   .catch((error) => {
     document.querySelector("#signal-caption").textContent = error.message;
   });

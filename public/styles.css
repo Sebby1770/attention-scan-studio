@@ -331,6 +331,7 @@ h1 {
 }
 
 .metric-card,
+.status-card,
 .signal-card,
 .insight-card {
   padding: 18px;
@@ -351,9 +352,51 @@ h1 {
   font-size: 0.88rem;
 }
 
+.status-ribbon {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.status-card span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.status-card strong {
+  display: block;
+  margin-top: 10px;
+  font-size: 1.1rem;
+}
+
+.status-card.critical strong {
+  color: var(--critical);
+}
+
+.status-card.high strong {
+  color: var(--high);
+}
+
+.status-card.elevated strong {
+  color: var(--orange);
+}
+
+.status-card.calm strong {
+  color: var(--teal);
+}
+
 .priority-layout {
   display: grid;
   grid-template-columns: 1.3fr 0.8fr;
+  gap: 18px;
+  padding-top: 20px;
+}
+
+.control-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
   gap: 18px;
   padding-top: 20px;
 }
@@ -376,6 +419,36 @@ h1 {
 
 .stack.compact {
   gap: 10px;
+}
+
+.filter-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filter-chip {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+  border-radius: 999px;
+  min-height: 40px;
+  padding: 0 14px;
+  font: inherit;
+  cursor: pointer;
+  text-transform: capitalize;
+}
+
+.filter-chip.active {
+  background: rgba(131, 242, 223, 0.14);
+  border-color: rgba(131, 242, 223, 0.32);
+  color: var(--teal);
+}
+
+.filter-caption {
+  margin: 14px 0 0;
+  color: var(--muted);
+  line-height: 1.5;
 }
 
 .signal-card {
@@ -446,6 +519,37 @@ h1 {
   display: grid;
   gap: 18px;
   padding-top: 18px;
+}
+
+.release-list {
+  display: grid;
+  gap: 12px;
+}
+
+.release-card {
+  padding: 16px 18px;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.release-card span {
+  display: inline-block;
+  color: var(--teal);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.release-card h4 {
+  margin: 10px 0;
+}
+
+.release-card ul {
+  margin: 0;
+  padding-left: 18px;
+  color: #c1d0cd;
+  line-height: 1.6;
 }
 
 .section-panel {
@@ -523,6 +627,7 @@ h1 {
 
 @media (max-width: 1040px) {
   .hero,
+  .control-layout,
   .priority-layout,
   .architecture-grid,
   .flow-steps {
@@ -531,6 +636,10 @@ h1 {
 
   .metric-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .status-ribbon {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

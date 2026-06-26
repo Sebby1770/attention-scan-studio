@@ -84,11 +84,65 @@ function createItem({
   };
 }
 
+function flattenSections(sections) {
+  return SECTION_ORDER.flatMap((key) => sections[key] || []);
+}
+
+function createSeverityBreakdown(items) {
+  return items.reduce(
+    (breakdown, item) => {
+      breakdown[item.severity] += 1;
+      return breakdown;
+    },
+    { critical: 0, high: 0, medium: 0, low: 0 },
+  );
+}
+
+function resolvePulse(metrics) {
+  if (metrics.severityBreakdown.critical > 0) {
+    return "critical";
+  }
+
+  if (metrics.immediateCount > 0 || metrics.workflowFailureCount > 0) {
+    return "elevated";
+  }
+
+  if (metrics.totalAttentionCount > 0) {
+    return "watch";
+  }
+
+  return "calm";
+}
+
+function buildMetrics({
+  openPullRequests,
+  openIssues,
+  sections,
+  suppressedWorkflowFailures = 0,
+}) {
+  const items = flattenSections(sections);
+
+  return {
+    openPullRequests,
+    openIssues,
+    immediateCount: sections.immediateAction.length,
+    reviewQueueCount: sections.reviewQueue.length,
+    issueTriageCount: sections.issueTriage.length,
+    workflowFailureCount: sections.workflowFailures.length,
+    staleCount: sections.staleWork.length,
+    totalAttentionCount: items.length,
+    severityBreakdown: createSeverityBreakdown(items),
+    suppressedWorkflowFailures,
+  };
+}
+
 function createInsights(report) {
   const insights = [];
   const { metrics } = report;
 
-  if (metrics.immediateCount > 0) {
+  if (metrics.severityBreakdown.critical > 0) {
+    insights.push(`${metrics.severityBreakdown.critical} critical signal(s) are actively breaking flow.`);
+  } else if (metrics.immediateCount > 0) {
     insights.push(`${metrics.immediateCount} high-pressure signal(s) are sitting above the line right now.`);
   }
 
@@ -98,6 +152,10 @@ function createInsights(report) {
 
   if (metrics.workflowFailureCount > 0) {
     insights.push("CI is contributing active friction and should be cleared before queue depth grows.");
+  }
+
+  if (metrics.suppressedWorkflowFailures > 0) {
+    insights.push(`${metrics.suppressedWorkflowFailures} older workflow failure(s) were suppressed because a newer success resolved them.`);
   }
 
   if (metrics.staleCount > 0 && metrics.immediateCount === 0) {
@@ -465,6 +523,36 @@ function inspectWorkflowRun(run, now) {
   });
 }
 
+function selectUnresolvedWorkflowRuns(workflowRuns) {
+  const resolved = new Set();
+  const selected = [];
+  let suppressedCount = 0;
+
+  for (const run of workflowRuns) {
+    const key = `${run.name || "unknown"}::${run.head_branch || "unknown"}`;
+
+    if (run.conclusion === "success") {
+      resolved.add(key);
+      continue;
+    }
+
+    if (run.name === "Attention Scan" || !BAD_CONCLUSIONS.has(run.conclusion) || resolved.has(key)) {
+      if (BAD_CONCLUSIONS.has(run.conclusion) && resolved.has(key) && run.name !== "Attention Scan") {
+        suppressedCount += 1;
+      }
+      continue;
+    }
+
+    selected.push(run);
+    resolved.add(key);
+  }
+
+  return {
+    selected,
+    suppressedCount,
+  };
+}
+
 export function createDemoReport({ repository = "Sebby1770/attention-scan", reason = "Demo mode is active." } = {}) {
   const now = new Date().toISOString();
   const sections = createEmptySections();
@@ -550,24 +638,22 @@ export function createDemoReport({ repository = "Sebby1770/attention-scan", reas
     sections[key] = sortItems(sections[key]);
   }
 
-  const items = SECTION_ORDER.flatMap((key) => sections[key]);
+  const items = flattenSections(sections);
+  const metrics = buildMetrics({
+    openPullRequests: 6,
+    openIssues: 14,
+    sections,
+  });
   const report = {
     meta: {
       repository,
       generatedAt: now,
       mode: "demo",
       source: reason,
+      pulse: resolvePulse(metrics),
     },
     summary: reason,
-    metrics: {
-      openPullRequests: 6,
-      openIssues: 14,
-      immediateCount: sections.immediateAction.length,
-      reviewQueueCount: sections.reviewQueue.length,
-      issueTriageCount: sections.issueTriage.length,
-      workflowFailureCount: sections.workflowFailures.length,
-      staleCount: sections.staleWork.length,
-    },
+    metrics,
     topActions: sortItems(items).slice(0, 4),
     sections,
     insights: [],
@@ -621,14 +707,16 @@ export async function generateAttentionReport({
   const pullItems = (await Promise.all(activePulls.map((pr) => inspectPullRequest(client, repoRef, pr, thresholds, now)))).flat();
   const issueItems = realIssues.flatMap((issue) => inspectIssue(issue, thresholds, now));
   const workflowItems = (workflowRuns.workflow_runs || [])
-    .filter((run) => run.name !== "Attention Scan")
-    .filter((run) => BAD_CONCLUSIONS.has(run.conclusion))
+    .sort((left, right) => new Date(right.created_at) - new Date(left.created_at));
+
+  const workflowSelection = selectUnresolvedWorkflowRuns(workflowItems);
+  const unresolvedWorkflowItems = workflowSelection.selected
     .slice(0, thresholds.failedRunLimit)
     .map((run) => inspectWorkflowRun(run, now));
 
   const sections = createEmptySections();
   const seen = new Set();
-  for (const item of [...pullItems, ...issueItems, ...workflowItems]) {
+  for (const item of [...pullItems, ...issueItems, ...unresolvedWorkflowItems]) {
     addUnique(sections, item, seen);
   }
 
@@ -636,27 +724,26 @@ export async function generateAttentionReport({
     sections[key] = sortItems(sections[key]);
   }
 
-  const items = SECTION_ORDER.flatMap((key) => sections[key]);
+  const items = flattenSections(sections);
+  const metrics = buildMetrics({
+    openPullRequests: activePulls.length,
+    openIssues: realIssues.length,
+    sections,
+    suppressedWorkflowFailures: workflowSelection.suppressedCount,
+  });
   const report = {
     meta: {
       repository,
       generatedAt: now.toISOString(),
       mode: "live",
       source: "GitHub REST API",
+      pulse: resolvePulse(metrics),
     },
     summary:
       items.length === 0
         ? "No urgent GitHub signals were found in this scan."
         : `Found ${items.length} attention item(s) across pull requests, issues, and workflows.`,
-    metrics: {
-      openPullRequests: activePulls.length,
-      openIssues: realIssues.length,
-      immediateCount: sections.immediateAction.length,
-      reviewQueueCount: sections.reviewQueue.length,
-      issueTriageCount: sections.issueTriage.length,
-      workflowFailureCount: sections.workflowFailures.length,
-      staleCount: sections.staleWork.length,
-    },
+    metrics,
     topActions: sortItems(items).slice(0, 5),
     sections,
     insights: [],
@@ -747,5 +834,6 @@ export async function upsertReportIssue({
 export {
   SECTION_ORDER,
   SECTION_TITLES,
+  selectUnresolvedWorkflowRuns,
   toMarkdown,
 };

@@ -1,0 +1,32 @@
+{
+  "releases": [
+    {
+      "version": "0.4.0",
+      "date": "2026-06-26",
+      "title": "Signal controls and cleaner backend truth",
+      "items": [
+        "Added severity filters and repo status cards to the dashboard.",
+        "Added changelog data for the site and a repo-level changelog file.",
+        "Suppressed historical workflow failures once a newer successful rerun resolved them."
+      ]
+    },
+    {
+      "version": "0.3.0",
+      "date": "2026-06-22",
+      "title": "Pages deployment and modular scan engine",
+      "items": [
+        "Split GitHub scan logic into reusable backend modules.",
+        "Added GitHub Pages deployment and a local preview server.",
+        "Added automated issue sync and generated report JSON."
+      ]
+    },
+    {
+      "version": "0.1.0",
+      "date": "2026-04-23",
+      "title": "Initial scan workflow",
+      "items": [
+        "Started with a workflow-only GitHub attention scanner."
+      ]
+    }
+  ]
+}

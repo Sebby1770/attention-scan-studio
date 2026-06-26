@@ -36,6 +36,7 @@ Then open [http://localhost:3000](http://localhost:3000).
 - `scripts/run-scan.js`: CLI entrypoint used locally and in GitHub Actions
 - `public/`: website assets and generated report data
 - `.github/workflows/`: scan automation and Pages deploy
+- `CHANGELOG.md`: release history for repo-level changes
 
 ## Deploy
 
