@@ -4,12 +4,17 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { createDemoReport, generateAttentionReport, readPersistedReport } from "./attention.js";
+import { loadProjectConfig, resolveRepository } from "./config.js";
+import { buildSiteData } from "./site-data.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname, "..");
 const publicRoot = path.join(projectRoot, "public");
 const persistedReportPath = path.join(publicRoot, "data", "latest-report.json");
 const port = Number(process.env.PORT || 3000);
+const projectConfig = await loadProjectConfig(projectRoot);
+await buildSiteData({ projectRoot, projectConfig });
+const configuredRepository = resolveRepository(projectConfig) || null;
 
 const mimeTypes = {
   ".css": "text/css; charset=utf-8",
@@ -57,18 +62,18 @@ createServer(async (request, response) => {
   if (url.pathname === "/api/health") {
     sendJson(response, 200, {
       ok: true,
-      repository: process.env.GITHUB_REPOSITORY || null,
-      mode: process.env.GITHUB_TOKEN && process.env.GITHUB_REPOSITORY ? "live-capable" : "demo",
+      repository: configuredRepository,
+      mode: process.env.GITHUB_TOKEN && configuredRepository ? "live-capable" : "demo",
     });
     return;
   }
 
   if (url.pathname === "/api/report") {
-    if (url.searchParams.get("live") === "1" && process.env.GITHUB_TOKEN && process.env.GITHUB_REPOSITORY) {
+    if (url.searchParams.get("live") === "1" && process.env.GITHUB_TOKEN && configuredRepository) {
       try {
         const liveReport = await generateAttentionReport({
           token: process.env.GITHUB_TOKEN,
-          repository: process.env.GITHUB_REPOSITORY,
+          repository: configuredRepository,
         });
         sendJson(response, 200, liveReport);
         return;

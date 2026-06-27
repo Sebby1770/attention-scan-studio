@@ -1,0 +1,13 @@
+{
+  "repository": "Sebby1770/attention-scan-studio",
+  "title": "Attention Scan",
+  "eyebrow": "GitHub attention intelligence",
+  "heroTitle": "Attention Scan turns repo chaos into a signal field.",
+  "heroBody": "A sharp dashboard for pull requests, issue drift, and CI breakage. The frontend is visual and atmospheric. The backend is modular, scored, and reusable from both local preview and GitHub Actions.",
+  "description": "An abstract GitHub attention radar with a live dashboard, release trail, and automated repo triage.",
+  "repoUrl": "https://github.com/Sebby1770/attention-scan-studio",
+  "siteUrl": "https://sebby1770.github.io/attention-scan-studio/",
+  "latestVersion": "0.5.0",
+  "latestReleaseDate": "2026-06-27",
+  "releasesCount": 4
+}

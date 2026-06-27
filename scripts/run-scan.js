@@ -9,20 +9,19 @@ import {
   toMarkdown,
   upsertReportIssue,
 } from "../src/attention.js";
+import { createScanConfig, loadProjectConfig, resolveRepository } from "../src/config.js";
+import { buildSiteData } from "../src/site-data.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname, "..");
 
-const config = {
-  staleDays: Number(process.env.STALE_DAYS || 7),
-  reviewGraceDays: Number(process.env.REVIEW_GRACE_DAYS || 3),
-  triageDays: Number(process.env.TRIAGE_DAYS || 2),
-  failedRunLimit: Number(process.env.FAILED_RUN_LIMIT || 10),
-};
-
 async function main() {
+  const projectConfig = await loadProjectConfig(projectRoot);
+  const config = createScanConfig(projectConfig);
   const token = process.env.GITHUB_TOKEN || process.env.GH_TOKEN || "";
-  const repository = process.env.GITHUB_REPOSITORY || process.env.ATTENTION_REPOSITORY || "";
+  const repository = resolveRepository(projectConfig);
+  await buildSiteData({ projectRoot, projectConfig });
+
   const report = repository && token
     ? await generateAttentionReport({ token, repository, config })
     : createDemoReport({

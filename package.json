@@ -4,6 +4,7 @@
   "description": "An abstract GitHub attention radar with a live dashboard and automated repo triage.",
   "type": "module",
   "scripts": {
+    "build:data": "node scripts/build-site-data.js",
     "dev": "node --watch src/server.js",
     "start": "node src/server.js",
     "scan": "node scripts/run-scan.js",

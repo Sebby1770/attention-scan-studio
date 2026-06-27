@@ -50,6 +50,8 @@ jobs:
           path: |
             artifacts/attention-report.md
             public/data/latest-report.json
+            public/data/changelog.json
+            public/data/site-config.json
 
       - name: Commit refreshed report
         run: |

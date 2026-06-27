@@ -215,6 +215,13 @@ h1 {
   flex-wrap: wrap;
 }
 
+.hero-meta {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
 .button {
   display: inline-flex;
   align-items: center;

@@ -10,6 +10,7 @@ const severityOptions = ["all", "critical", "high", "medium", "low"];
 const state = {
   report: null,
   changelog: { releases: [] },
+  siteConfig: null,
   severity: "all",
 };
 
@@ -42,6 +43,10 @@ async function loadReport() {
 
 async function loadChangelog() {
   return (await loadJson(["./data/changelog.json"])) || { releases: [] };
+}
+
+async function loadSiteConfig() {
+  return (await loadJson(["./data/site-config.json"])) || null;
 }
 
 function metricCard(label, value) {
@@ -152,8 +157,31 @@ function bindFilters() {
   });
 }
 
+function hydrateSiteConfig(report, siteConfig, changelog) {
+  const effectiveConfig = siteConfig || {};
+  const latestRelease = changelog.releases?.[0] || null;
+  const heroTitle = effectiveConfig.heroTitle || "Attention Scan turns repo chaos into a signal field.";
+  const heroBody = effectiveConfig.heroBody || report.summary;
+  const eyebrow = effectiveConfig.eyebrow || "GitHub attention intelligence";
+  const title = effectiveConfig.title || "Attention Scan";
+  const description =
+    effectiveConfig.description || "An abstract GitHub attention radar with a live dashboard and automated repo triage.";
+  const repoUrl = effectiveConfig.repoUrl || `https://github.com/${report.meta.repository}`;
+
+  document.title = title;
+  document.querySelector('meta[name="description"]').setAttribute("content", description);
+  document.querySelector("#site-eyebrow").textContent = eyebrow;
+  document.querySelector("#hero-title").textContent = heroTitle;
+  document.querySelector("#hero-body").textContent = heroBody;
+  document.querySelector("#repo-link").href = repoUrl;
+  document.querySelector("#repo-pill").textContent = report.meta.repository;
+  document.querySelector("#latest-version").textContent = latestRelease
+    ? `v${latestRelease.version} · ${latestRelease.date}`
+    : "No release notes yet";
+}
+
 function render() {
-  const { report, changelog } = state;
+  const { report, changelog, siteConfig } = state;
   const sections = filteredSections(report);
   const filteredTopActions = filterItems(report.topActions);
   const visibleCount = Object.values(sections).reduce((total, items) => total + items.length, 0);
@@ -161,12 +189,12 @@ function render() {
   const severityBreakdown = report.metrics.severityBreakdown || { critical: 0, high: 0, medium: 0, low: 0 };
   const pulse = report.meta.pulse || "watch";
 
+  hydrateSiteConfig(report, siteConfig, changelog);
   document.querySelector("#report-mode").textContent = `${report.meta.mode.toUpperCase()} / ${pulse.toUpperCase()}`;
   document.querySelector("#signal-caption").textContent = report.summary;
   document.querySelector("#footer-meta").textContent = `${report.meta.repository} · ${new Date(
     report.meta.generatedAt,
   ).toLocaleString()}`;
-  document.querySelector("#repo-link").href = `https://github.com/${report.meta.repository}`;
   document.querySelector("#filter-caption").textContent = `Showing ${severityLabel}. ${visibleCount} item(s) currently match this view.`;
 
   document.querySelector("#metric-grid").innerHTML = [
@@ -209,10 +237,11 @@ function render() {
     .join("");
 }
 
-Promise.all([loadReport(), loadChangelog()])
-  .then(([report, changelog]) => {
+Promise.all([loadReport(), loadChangelog(), loadSiteConfig()])
+  .then(([report, changelog, siteConfig]) => {
     state.report = report;
     state.changelog = changelog;
+    state.siteConfig = siteConfig;
     render();
   })
   .catch((error) => {
