@@ -506,6 +506,10 @@ function inspectIssue(issue, config, now) {
   return items;
 }
 
+function isReportIssue(issue, config = {}) {
+  return issue.title === (config.reportTitle || "Attention Scan Report");
+}
+
 function inspectWorkflowRun(run, now) {
   const ageDays = daysSince(run.updated_at || run.created_at, now);
   const title = `${run.name || `Run ${run.id}`} · ${run.head_branch || "unknown branch"}`;
@@ -681,6 +685,7 @@ export async function generateAttentionReport({
     reviewGraceDays: Number(config.reviewGraceDays ?? 3),
     triageDays: Number(config.triageDays ?? 2),
     failedRunLimit: Number(config.failedRunLimit ?? 10),
+    reportTitle: config.reportTitle || "Attention Scan Report",
   };
 
   const repoRef = parseRepository(repository);
@@ -701,7 +706,7 @@ export async function generateAttentionReport({
     }),
   ]);
 
-  const realIssues = issues.filter((issue) => !issue.pull_request);
+  const realIssues = issues.filter((issue) => !issue.pull_request && !isReportIssue(issue, thresholds));
   const activePulls = pulls.filter((pr) => !pr.draft);
 
   const pullItems = (await Promise.all(activePulls.map((pr) => inspectPullRequest(client, repoRef, pr, thresholds, now)))).flat();
@@ -834,6 +839,7 @@ export async function upsertReportIssue({
 export {
   SECTION_ORDER,
   SECTION_TITLES,
+  isReportIssue,
   selectUnresolvedWorkflowRuns,
   toMarkdown,
 };

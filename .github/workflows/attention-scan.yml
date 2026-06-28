@@ -50,18 +50,19 @@ jobs:
           path: |
             artifacts/attention-report.md
             public/data/latest-report.json
+            public/data/history.json
             public/data/changelog.json
             public/data/site-config.json
 
       - name: Commit refreshed report
         run: |
-          if git diff --quiet -- public/data/latest-report.json; then
+          if git diff --quiet -- public/data/latest-report.json public/data/history.json public/data/changelog.json public/data/site-config.json; then
             echo "No report changes to commit."
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/data/latest-report.json
+          git add public/data/latest-report.json public/data/history.json public/data/changelog.json public/data/site-config.json
           git commit -m "chore: refresh attention report"
           git push

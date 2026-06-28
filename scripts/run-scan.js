@@ -10,6 +10,7 @@ import {
   upsertReportIssue,
 } from "../src/attention.js";
 import { createScanConfig, loadProjectConfig, resolveRepository } from "../src/config.js";
+import { updateReportHistory } from "../src/history.js";
 import { buildSiteData } from "../src/site-data.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -30,6 +31,7 @@ async function main() {
       });
 
   const { jsonPath, markdownPath } = await persistReport(report, { projectRoot });
+  const { historyPath } = await updateReportHistory(report, { projectRoot });
   const markdown = toMarkdown(report);
 
   if (process.env.GITHUB_STEP_SUMMARY) {
@@ -55,6 +57,7 @@ async function main() {
 
   console.log(`Report JSON written to ${jsonPath}`);
   console.log(`Report markdown written to ${markdownPath}`);
+  console.log(`Report history written to ${historyPath}`);
   console.log(`Summary: ${report.summary}`);
 }
 

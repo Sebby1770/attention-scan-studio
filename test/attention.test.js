@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import { createDemoReport, selectUnresolvedWorkflowRuns, toMarkdown } from "../src/attention.js";
+import { createDemoReport, isReportIssue, selectUnresolvedWorkflowRuns, toMarkdown } from "../src/attention.js";
 
 test("demo report exposes ordered top actions", () => {
   const report = createDemoReport();
@@ -52,4 +52,9 @@ test("resolved workflow failures are filtered out", () => {
   assert.equal(unresolved.selected.length, 1);
   assert.equal(unresolved.selected[0].id, 2);
   assert.equal(unresolved.suppressedCount, 1);
+});
+
+test("report issue can be identified as scanner-owned noise", () => {
+  assert.equal(isReportIssue({ title: "Attention Scan Report" }), true);
+  assert.equal(isReportIssue({ title: "User-facing bug" }), false);
 });

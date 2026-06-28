@@ -10,6 +10,7 @@ const severityOptions = ["all", "critical", "high", "medium", "low"];
 const state = {
   report: null,
   changelog: { releases: [] },
+  history: { history: [], summary: { direction: "flat", delta: 0, label: "No scan history yet" } },
   siteConfig: null,
   severity: "all",
 };
@@ -43,6 +44,13 @@ async function loadReport() {
 
 async function loadChangelog() {
   return (await loadJson(["./data/changelog.json"])) || { releases: [] };
+}
+
+async function loadHistory() {
+  return (await loadJson(["./data/history.json"])) || {
+    history: [],
+    summary: { direction: "flat", delta: 0, label: "No scan history yet" },
+  };
 }
 
 async function loadSiteConfig() {
@@ -108,6 +116,17 @@ function releaseCard(release) {
       <h4>${release.title}</h4>
       <ul>${items}</ul>
     </article>
+  `;
+}
+
+function trendBar(entry, maxAttention) {
+  const height = maxAttention === 0 ? 8 : Math.max(8, Math.round((entry.totalAttentionCount / maxAttention) * 96));
+  const label = new Date(entry.generatedAt).toLocaleDateString(undefined, { month: "short", day: "numeric" });
+
+  return `
+    <span class="trend-bar ${entry.pulse}" style="height: ${height}px" title="${label}: ${entry.totalAttentionCount} attention item(s)">
+      <span>${entry.totalAttentionCount}</span>
+    </span>
   `;
 }
 
@@ -181,7 +200,7 @@ function hydrateSiteConfig(report, siteConfig, changelog) {
 }
 
 function render() {
-  const { report, changelog, siteConfig } = state;
+  const { report, changelog, history, siteConfig } = state;
   const sections = filteredSections(report);
   const filteredTopActions = filterItems(report.topActions);
   const visibleCount = Object.values(sections).reduce((total, items) => total + items.length, 0);
@@ -235,12 +254,23 @@ function render() {
   document.querySelector("#release-list").innerHTML = (changelog.releases || [])
     .map(releaseCard)
     .join("");
+
+  const trendHistory = (history.history || []).slice(-12);
+  const maxAttention = Math.max(0, ...trendHistory.map((entry) => entry.totalAttentionCount || 0));
+  document.querySelector("#trend-summary").innerHTML = `
+    <strong>${history.summary?.label || "No scan history yet"}</strong>
+    <span>${trendHistory.length} scan snapshot(s) tracked</span>
+  `;
+  document.querySelector("#trend-bars").innerHTML = trendHistory.length
+    ? trendHistory.map((entry) => trendBar(entry, maxAttention)).join("")
+    : '<span class="trend-empty">History will appear after the next scan.</span>';
 }
 
-Promise.all([loadReport(), loadChangelog(), loadSiteConfig()])
-  .then(([report, changelog, siteConfig]) => {
+Promise.all([loadReport(), loadChangelog(), loadHistory(), loadSiteConfig()])
+  .then(([report, changelog, history, siteConfig]) => {
     state.report = report;
     state.changelog = changelog;
+    state.history = history;
     state.siteConfig = siteConfig;
     render();
   })

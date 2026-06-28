@@ -13,6 +13,7 @@
     "staleDays": 7,
     "reviewGraceDays": 3,
     "triageDays": 2,
-    "failedRunLimit": 10
+    "failedRunLimit": 10,
+    "reportTitle": "Attention Scan Report"
   }
 }

@@ -1,6 +1,18 @@
 {
   "releases": [
     {
+      "version": "0.6.0",
+      "date": "2026-06-28",
+      "title": "Scan history and dashboard momentum tracking.",
+      "items": [
+        "Added `history.json` generation so each scan stores a compact trend snapshot.",
+        "Added a momentum panel to the dashboard with recent scan bars and a trend summary.",
+        "Ignored the scanner-owned report issue during issue triage so the dashboard does not flag its own output as work.",
+        "Added history tests covering compact snapshots and attention direction labels.",
+        "Updated the scan workflow so refreshed report commits include history data."
+      ]
+    },
+    {
       "version": "0.5.0",
       "date": "2026-06-27",
       "title": "Config-driven site data and generated release history.",

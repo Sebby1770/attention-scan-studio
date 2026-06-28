@@ -13,6 +13,7 @@ Attention Scan is a GitHub-first repo radar with two outputs:
 - Added a local server for previewing the site and loading reports.
 - Added GitHub Pages deployment and artifact generation.
 - Added config-driven site data generation so changelog and branding stay in sync.
+- Added scan history so the dashboard can show momentum over recent runs.
 
 ## Local usage
 
@@ -36,6 +37,7 @@ Then open [http://localhost:3000](http://localhost:3000).
 - `attention.config.json`: repository, site, and scan defaults
 - `src/attention.js`: scan engine, scoring, markdown generation, and GitHub issue sync
 - `src/changelog.js`: changelog parser used to generate release data
+- `src/history.js`: compact scan-history snapshots and trend summaries
 - `src/site-data.js`: static site data builder for changelog and branding assets
 - `src/server.js`: local server and report API
 - `scripts/build-site-data.js`: generates `public/data` artifacts from config and changelog

@@ -22,6 +22,7 @@ const DEFAULT_CONFIG = {
     reviewGraceDays: 3,
     triageDays: 2,
     failedRunLimit: 10,
+    reportTitle: "Attention Scan Report",
   },
 };
 
@@ -61,6 +62,7 @@ export function createScanConfig(projectConfig) {
     reviewGraceDays: Number(process.env.REVIEW_GRACE_DAYS || projectConfig.scan.reviewGraceDays || 3),
     triageDays: Number(process.env.TRIAGE_DAYS || projectConfig.scan.triageDays || 2),
     failedRunLimit: Number(process.env.FAILED_RUN_LIMIT || projectConfig.scan.failedRunLimit || 10),
+    reportTitle: process.env.REPORT_TITLE || projectConfig.scan.reportTitle || "Attention Scan Report",
   };
 }
 

@@ -7,7 +7,7 @@
   "description": "An abstract GitHub attention radar with a live dashboard, release trail, and automated repo triage.",
   "repoUrl": "https://github.com/Sebby1770/attention-scan-studio",
   "siteUrl": "https://sebby1770.github.io/attention-scan-studio/",
-  "latestVersion": "0.5.0",
-  "latestReleaseDate": "2026-06-27",
-  "releasesCount": 4
+  "latestVersion": "0.6.0",
+  "latestReleaseDate": "2026-06-28",
+  "releasesCount": 5
 }

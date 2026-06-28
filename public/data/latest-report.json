@@ -1,7 +1,7 @@
 {
   "meta": {
     "repository": "Sebby1770/attention-scan-studio",
-    "generatedAt": "2026-06-27T01:07:24.984Z",
+    "generatedAt": "2026-06-28T10:27:48.384Z",
     "mode": "live",
     "source": "GitHub REST API",
     "pulse": "calm"
@@ -9,7 +9,7 @@
   "summary": "No urgent GitHub signals were found in this scan.",
   "metrics": {
     "openPullRequests": 0,
-    "openIssues": 1,
+    "openIssues": 0,
     "immediateCount": 0,
     "reviewQueueCount": 0,
     "issueTriageCount": 0,
