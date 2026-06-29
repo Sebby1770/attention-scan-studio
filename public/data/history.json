@@ -23,11 +23,23 @@
       "staleCount": 0,
       "openPullRequests": 0,
       "openIssues": 0
+    },
+    {
+      "generatedAt": "2026-06-29T00:16:15.243Z",
+      "pulse": "calm",
+      "totalAttentionCount": 0,
+      "immediateCount": 0,
+      "reviewQueueCount": 0,
+      "issueTriageCount": 0,
+      "workflowFailureCount": 0,
+      "staleCount": 0,
+      "openPullRequests": 0,
+      "openIssues": 0
     }
   ],
   "summary": {
-    "direction": "down",
-    "delta": -1,
-    "label": "Attention dropped by 1"
+    "direction": "flat",
+    "delta": 0,
+    "label": "Attention is steady"
   }
 }
