@@ -1,18 +1,6 @@
 {
   "history": [
     {
-      "generatedAt": "2026-07-20T00:03:53.574Z",
-      "pulse": "calm",
-      "totalAttentionCount": 0,
-      "immediateCount": 0,
-      "reviewQueueCount": 0,
-      "issueTriageCount": 0,
-      "workflowFailureCount": 0,
-      "staleCount": 0,
-      "openPullRequests": 0,
-      "openIssues": 0
-    },
-    {
       "generatedAt": "2026-07-21T00:03:42.412Z",
       "pulse": "calm",
       "totalAttentionCount": 0,
@@ -350,6 +338,18 @@
     },
     {
       "generatedAt": "2026-08-28T06:51:01.616Z",
+      "pulse": "calm",
+      "totalAttentionCount": 0,
+      "immediateCount": 0,
+      "reviewQueueCount": 0,
+      "issueTriageCount": 0,
+      "workflowFailureCount": 0,
+      "staleCount": 0,
+      "openPullRequests": 0,
+      "openIssues": 0
+    },
+    {
+      "generatedAt": "2026-08-31T01:19:56.470Z",
       "pulse": "calm",
       "totalAttentionCount": 0,
       "immediateCount": 0,
