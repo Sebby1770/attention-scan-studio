@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.0.0 - 2026-09-08
+
+Summary: The Chamber — phosphor PPI radar frontend.
+
+- Rebuilt the dashboard as a radar chamber: circular scope, rotating sweep, and severity-coded blips.
+- Clicking a contact locks the matching teleprinter card.
+- Quiet live scans fall back to a rehearsal dataset so the scope still has contacts to read.
+- New phosphor / amber CRT visual identity.
+
 ## 0.6.0 - 2026-06-28
 
 Summary: Scan history and dashboard momentum tracking.

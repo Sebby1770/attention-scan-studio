@@ -1,7 +1,7 @@
 {
   "name": "attention-scan",
-  "version": "1.0.0",
-  "description": "An abstract GitHub attention radar with a live dashboard and automated repo triage.",
+  "version": "3.0.0",
+  "description": "The Chamber — a phosphor GitHub attention radar with a live PPI scope and automated repo triage.",
   "type": "module",
   "scripts": {
     "build:data": "node scripts/build-site-data.js",

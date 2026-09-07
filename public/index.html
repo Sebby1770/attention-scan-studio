@@ -3,16 +3,21 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Attention Scan</title>
+    <title>The Chamber — Attention Scan</title>
     <meta
       name="description"
-      content="Attention Scan turns GitHub pressure into a visual radar of what needs action next."
+      content="The Chamber plots GitHub pressure as phosphor contacts on a live PPI radar."
     >
+    <meta name="theme-color" content="#05070a">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Syne:wght@500;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Share+Tech+Mono&display=swap"
       rel="stylesheet"
+    >
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2305070a'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%239dff6b' stroke-width='1.6' opacity='.55'/%3E%3Ccircle cx='16' cy='16' r='6' fill='none' stroke='%239dff6b' stroke-width='1.6'/%3E%3Ccircle cx='16' cy='16' r='2.6' fill='%23ffbf47'/%3E%3C/svg%3E"
     >
     <link rel="stylesheet" href="./styles.css">
   </head>
@@ -21,12 +26,13 @@
     <div class="orb orb-a" aria-hidden="true"></div>
     <div class="orb orb-b" aria-hidden="true"></div>
     <div class="grid-glow" aria-hidden="true"></div>
+    <div class="scanlines" aria-hidden="true"></div>
 
     <header class="shell hero">
       <nav class="topbar">
-        <span class="brand-mark">A/S</span>
+        <span class="brand-mark">CH</span>
         <div class="topbar-links">
-          <a href="#radar">Radar</a>
+          <a href="#radar">Scope</a>
           <a href="#releases">Releases</a>
           <a href="#architecture">Architecture</a>
           <a href="#flow">Flow</a>
@@ -34,11 +40,11 @@
       </nav>
 
       <div class="hero-copy">
-        <p class="eyebrow" id="site-eyebrow">GitHub attention intelligence</p>
-        <h1 id="hero-title">Attention Scan turns repo chaos into a signal field.</h1>
+        <p class="eyebrow" id="site-eyebrow">Attention Scan · PPI scope</p>
+        <h1 id="hero-title">The Chamber plots repo pressure as contacts on a live scope.</h1>
         <p class="lede" id="hero-body">
-          A sharp dashboard for pull requests, issue drift, and CI breakage. The frontend is visual and atmospheric.
-          The backend is modular, scored, and reusable from both local preview and GitHub Actions.
+          Every open pull request, drifting issue, and red workflow run becomes a phosphor blip.
+          Severity pulls it toward the origin. Click a contact and the teleprinter locks on.
         </p>
         <div class="hero-meta">
           <span class="pill" id="latest-version">Loading release</span>
@@ -46,7 +52,7 @@
         </div>
 
         <div class="hero-actions">
-          <a class="button button-solid" href="#radar">Open the radar</a>
+          <a class="button button-solid" href="#radar">Lock the feed</a>
           <a class="button button-ghost" href="#architecture">See the stack</a>
           <a class="button button-ghost" id="repo-link" href="https://github.com/Sebby1770/attention-scan-studio" target="_blank" rel="noreferrer">Open GitHub</a>
         </div>
@@ -57,7 +63,11 @@
           <span>Live tone</span>
           <span id="report-mode">Loading</span>
         </div>
-        <div class="spectrum">
+        <div class="chamber-well">
+          <canvas id="chamber-radar" width="420" height="420" aria-label="Attention radar"></canvas>
+        </div>
+        <p class="chamber-readout" id="chamber-readout">Sweep idle</p>
+        <div class="spectrum" hidden>
           <div class="spectrum-ring ring-outer"></div>
           <div class="spectrum-ring ring-mid"></div>
           <div class="spectrum-ring ring-inner"></div>
@@ -65,15 +75,15 @@
           <div class="signal-dot signal-high"></div>
           <div class="signal-dot signal-medium"></div>
         </div>
-        <div class="signal-caption" id="signal-caption">Preparing the signal field.</div>
+        <div class="signal-caption" id="signal-caption">Preparing the chamber.</div>
       </section>
     </header>
 
     <main class="shell">
       <section class="metrics" id="radar" aria-labelledby="metrics-title">
         <div class="section-heading">
-          <p class="eyebrow">Radar</p>
-          <h2 id="metrics-title">What needs attention right now</h2>
+          <p class="eyebrow">Contacts</p>
+          <h2 id="metrics-title">What the sweep is shouting</h2>
         </div>
         <div class="metric-grid" id="metric-grid"></div>
       </section>
@@ -81,7 +91,7 @@
       <section class="control-layout">
         <article class="panel control-panel">
           <div class="panel-head">
-            <p class="eyebrow">Signal controls</p>
+            <p class="eyebrow">Range filters</p>
             <h3>Focus the feed without losing the shape of the repo</h3>
           </div>
           <div class="filter-row" id="filter-row"></div>
@@ -132,22 +142,22 @@
       <section class="architecture" id="architecture">
         <div class="section-heading">
           <p class="eyebrow">Architecture</p>
-          <h2>Front-end mood, back-end discipline</h2>
+          <h2>Sweep, score, lock</h2>
         </div>
 
         <div class="architecture-grid">
           <article class="panel feature-card">
-            <h3>Abstract presentation layer</h3>
+            <h3>Phosphor presentation layer</h3>
             <p>
-              The site uses layered gradients, animated signal rings, intentional typography, and sectioned cards so the
-              repo state feels designed instead of dumped.
+              The Chamber is a PPI scope, not a spreadsheet. Contacts, sweep, and teleprinter cards make repo pressure
+              feel like a room you can read at a glance.
             </p>
           </article>
 
           <article class="panel feature-card">
             <h3>Reusable scan engine</h3>
             <p>
-              GitHub scanning now lives in JavaScript modules, not inside workflow YAML. The same scoring logic powers
+              GitHub scanning lives in JavaScript modules, not inside workflow YAML. The same scoring logic powers
               local previews, stored JSON, markdown reports, and issue updates.
             </p>
           </article>
@@ -214,14 +224,14 @@
           <article class="flow-step">
             <span>03</span>
             <h3>Render</h3>
-            <p>The generated JSON drives a dashboard that feels more like a control room than a spreadsheet.</p>
+            <p>The generated JSON drives a radar chamber that feels more like a control room than a spreadsheet.</p>
           </article>
         </div>
       </section>
     </main>
 
     <footer class="shell footer">
-      <p>Attention Scan</p>
+      <p>The Chamber</p>
       <p id="footer-meta">Waiting for report data.</p>
     </footer>
 

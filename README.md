@@ -1,6 +1,6 @@
-# Attention Scan
+# The Chamber (Attention Scan)
 
-Attention Scan is a GitHub-first repo radar with two outputs:
+The Chamber is a GitHub-first repo radar with two outputs:
 
 - a scheduled scan that scores PR, issue, and CI signals
 - an abstract dashboard site that turns those signals into something readable
