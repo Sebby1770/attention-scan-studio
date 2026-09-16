@@ -1,0 +1,13 @@
+{
+  "repository": "Sebby1770/attention-scan-studio",
+  "title": "The Chamber",
+  "eyebrow": "Attention Scan · PPI scope",
+  "heroTitle": "The Chamber plots repo pressure as contacts on a live scope.",
+  "heroBody": "Every open pull request, drifting issue, and red workflow run becomes a phosphor blip. Severity pulls it toward the origin. Click a contact and the teleprinter locks on.",
+  "description": "A phosphor radar chamber for GitHub attention: live PPI scope, scored feed, and automated repo triage.",
+  "repoUrl": "https://github.com/Sebby1770/attention-scan-studio",
+  "siteUrl": "https://sebby1770.github.io/attention-scan-studio/",
+  "latestVersion": "3.0.0",
+  "latestReleaseDate": "2026-09-08",
+  "releasesCount": 6
+}

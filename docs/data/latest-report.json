@@ -1,0 +1,38 @@
+{
+  "meta": {
+    "repository": "Sebby1770/attention-scan-studio",
+    "generatedAt": "2026-09-16T01:16:42.068Z",
+    "mode": "live",
+    "source": "GitHub REST API",
+    "pulse": "calm"
+  },
+  "summary": "No urgent GitHub signals were found in this scan.",
+  "metrics": {
+    "openPullRequests": 0,
+    "openIssues": 0,
+    "immediateCount": 0,
+    "reviewQueueCount": 0,
+    "issueTriageCount": 0,
+    "workflowFailureCount": 0,
+    "staleCount": 0,
+    "totalAttentionCount": 0,
+    "severityBreakdown": {
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    "suppressedWorkflowFailures": 2
+  },
+  "topActions": [],
+  "sections": {
+    "immediateAction": [],
+    "reviewQueue": [],
+    "issueTriage": [],
+    "workflowFailures": [],
+    "staleWork": []
+  },
+  "insights": [
+    "2 older workflow failure(s) were suppressed because a newer success resolved them."
+  ]
+}

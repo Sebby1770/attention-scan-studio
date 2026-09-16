@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The Chamber — Attention Scan</title>
+    <meta
+      name="description"
+      content="The Chamber plots GitHub pressure as phosphor contacts on a live PPI radar."
+    >
+    <meta name="theme-color" content="#05070a">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Share+Tech+Mono&display=swap"
+      rel="stylesheet"
+    >
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2305070a'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%239dff6b' stroke-width='1.6' opacity='.55'/%3E%3Ccircle cx='16' cy='16' r='6' fill='none' stroke='%239dff6b' stroke-width='1.6'/%3E%3Ccircle cx='16' cy='16' r='2.6' fill='%23ffbf47'/%3E%3C/svg%3E"
+    >
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <div class="noise" aria-hidden="true"></div>
+    <div class="orb orb-a" aria-hidden="true"></div>
+    <div class="orb orb-b" aria-hidden="true"></div>
+    <div class="grid-glow" aria-hidden="true"></div>
+    <div class="scanlines" aria-hidden="true"></div>
+
+    <header class="shell hero">
+      <nav class="topbar">
+        <span class="brand-mark">CH</span>
+        <div class="topbar-links">
+          <a href="#radar">Scope</a>
+          <a href="#releases">Releases</a>
+          <a href="#architecture">Architecture</a>
+          <a href="#flow">Flow</a>
+        </div>
+      </nav>
+
+      <div class="hero-copy">
+        <p class="eyebrow" id="site-eyebrow">Attention Scan · PPI scope</p>
+        <h1 id="hero-title">The Chamber plots repo pressure as contacts on a live scope.</h1>
+        <p class="lede" id="hero-body">
+          Every open pull request, drifting issue, and red workflow run becomes a phosphor blip.
+          Severity pulls it toward the origin. Click a contact and the teleprinter locks on.
+        </p>
+        <div class="hero-meta">
+          <span class="pill" id="latest-version">Loading release</span>
+          <span class="pill" id="repo-pill">Loading repo</span>
+        </div>
+
+        <div class="hero-actions">
+          <a class="button button-solid" href="#radar">Lock the feed</a>
+          <a class="button button-ghost" href="#architecture">See the stack</a>
+          <a class="button button-ghost" id="repo-link" href="https://github.com/Sebby1770/attention-scan-studio" target="_blank" rel="noreferrer">Open GitHub</a>
+        </div>
+      </div>
+
+      <section class="hero-panel">
+        <div class="hero-panel-head">
+          <span>Live tone</span>
+          <span id="report-mode">Loading</span>
+        </div>
+        <div class="chamber-well">
+          <canvas id="chamber-radar" width="420" height="420" aria-label="Attention radar"></canvas>
+        </div>
+        <p class="chamber-readout" id="chamber-readout">Sweep idle</p>
+        <div class="spectrum" hidden>
+          <div class="spectrum-ring ring-outer"></div>
+          <div class="spectrum-ring ring-mid"></div>
+          <div class="spectrum-ring ring-inner"></div>
+          <div class="signal-dot signal-critical"></div>
+          <div class="signal-dot signal-high"></div>
+          <div class="signal-dot signal-medium"></div>
+        </div>
+        <div class="signal-caption" id="signal-caption">Preparing the chamber.</div>
+      </section>
+    </header>
+
+    <main class="shell">
+      <section class="metrics" id="radar" aria-labelledby="metrics-title">
+        <div class="section-heading">
+          <p class="eyebrow">Contacts</p>
+          <h2 id="metrics-title">What the sweep is shouting</h2>
+        </div>
+        <div class="metric-grid" id="metric-grid"></div>
+      </section>
+
+      <section class="control-layout">
+        <article class="panel control-panel">
+          <div class="panel-head">
+            <p class="eyebrow">Range filters</p>
+            <h3>Focus the feed without losing the shape of the repo</h3>
+          </div>
+          <div class="filter-row" id="filter-row"></div>
+          <p class="filter-caption" id="filter-caption">Preparing filter state.</p>
+          <div class="status-ribbon" id="status-ribbon"></div>
+        </article>
+
+        <article class="panel release-panel" id="releases">
+          <div class="panel-head">
+            <p class="eyebrow">Release trail</p>
+            <h3>What changed and why it matters</h3>
+          </div>
+          <div class="release-list" id="release-list"></div>
+        </article>
+      </section>
+
+      <section class="panel trend-panel" id="trend">
+        <div class="panel-head">
+          <p class="eyebrow">Momentum</p>
+          <h3>Scan history</h3>
+        </div>
+        <div class="trend-layout">
+          <div class="trend-summary" id="trend-summary">Loading trend.</div>
+          <div class="trend-bars" id="trend-bars" aria-label="Attention trend over recent scans"></div>
+        </div>
+      </section>
+
+      <section class="priority-layout">
+        <article class="panel top-actions-panel">
+          <div class="panel-head">
+            <p class="eyebrow">Top actions</p>
+            <h3>First moves with the highest leverage</h3>
+          </div>
+          <div class="stack" id="top-actions"></div>
+        </article>
+
+        <article class="panel insights-panel">
+          <div class="panel-head">
+            <p class="eyebrow">Signal read</p>
+            <h3>Interpretation layer</h3>
+          </div>
+          <div class="stack compact" id="insights"></div>
+        </article>
+      </section>
+
+      <section class="section-stack" id="sections"></section>
+
+      <section class="architecture" id="architecture">
+        <div class="section-heading">
+          <p class="eyebrow">Architecture</p>
+          <h2>Sweep, score, lock</h2>
+        </div>
+
+        <div class="architecture-grid">
+          <article class="panel feature-card">
+            <h3>Phosphor presentation layer</h3>
+            <p>
+              The Chamber is a PPI scope, not a spreadsheet. Contacts, sweep, and teleprinter cards make repo pressure
+              feel like a room you can read at a glance.
+            </p>
+          </article>
+
+          <article class="panel feature-card">
+            <h3>Reusable scan engine</h3>
+            <p>
+              GitHub scanning lives in JavaScript modules, not inside workflow YAML. The same scoring logic powers
+              local previews, stored JSON, markdown reports, and issue updates.
+            </p>
+          </article>
+
+          <article class="panel feature-card">
+            <h3>Static and dynamic paths</h3>
+            <p>
+              The dashboard reads generated JSON for GitHub Pages, and the local server can also expose a live API route
+              when credentials are available.
+            </p>
+          </article>
+
+          <article class="panel feature-card">
+            <h3>Workflow-backed publishing</h3>
+            <p>
+              The scan workflow refreshes report data, uploads artifacts, and can keep the public-facing dashboard current
+              without manual editing.
+            </p>
+          </article>
+
+          <article class="panel feature-card">
+            <h3>Resolved-failure suppression</h3>
+            <p>
+              Older failed workflow runs are filtered out when a newer success on the same workflow and branch has already
+              resolved the problem, which keeps the feed focused on live friction.
+            </p>
+          </article>
+
+          <article class="panel feature-card">
+            <h3>Severity-aware controls</h3>
+            <p>
+              The dashboard can pivot by severity so you can isolate the hard blockers instead of treating every signal as
+              visually equal.
+            </p>
+          </article>
+
+          <article class="panel feature-card">
+            <h3>Scan history</h3>
+            <p>
+              Each scan now records a compact trend snapshot, so the dashboard can show whether attention is rising,
+              falling, or holding steady across recent runs.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="flow" id="flow">
+        <div class="section-heading">
+          <p class="eyebrow">Flow</p>
+          <h2>How the system moves</h2>
+        </div>
+
+        <div class="flow-steps">
+          <article class="flow-step">
+            <span>01</span>
+            <h3>Scan</h3>
+            <p>Pull requests, issues, reviews, check runs, and workflow failures are pulled into one normalized model.</p>
+          </article>
+          <article class="flow-step">
+            <span>02</span>
+            <h3>Score</h3>
+            <p>Each item gets severity, age pressure, section routing, and a next action instead of raw API noise.</p>
+          </article>
+          <article class="flow-step">
+            <span>03</span>
+            <h3>Render</h3>
+            <p>The generated JSON drives a radar chamber that feels more like a control room than a spreadsheet.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="shell footer">
+      <p>The Chamber</p>
+      <p id="footer-meta">Waiting for report data.</p>
+    </footer>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

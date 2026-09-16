@@ -1,0 +1,66 @@
+{
+  "releases": [
+    {
+      "version": "3.0.0",
+      "date": "2026-09-08",
+      "title": "The Chamber — phosphor PPI radar frontend.",
+      "items": [
+        "Rebuilt the dashboard as a radar chamber: circular scope, rotating sweep, and severity-coded blips.",
+        "Clicking a contact locks the matching teleprinter card.",
+        "Quiet live scans fall back to a rehearsal dataset so the scope still has contacts to read.",
+        "New phosphor / amber CRT visual identity."
+      ]
+    },
+    {
+      "version": "0.6.0",
+      "date": "2026-06-28",
+      "title": "Scan history and dashboard momentum tracking.",
+      "items": [
+        "Added `history.json` generation so each scan stores a compact trend snapshot.",
+        "Added a momentum panel to the dashboard with recent scan bars and a trend summary.",
+        "Ignored the scanner-owned report issue during issue triage so the dashboard does not flag its own output as work.",
+        "Added history tests covering compact snapshots and attention direction labels.",
+        "Updated the scan workflow so refreshed report commits include history data."
+      ]
+    },
+    {
+      "version": "0.5.0",
+      "date": "2026-06-27",
+      "title": "Config-driven site data and generated release history.",
+      "items": [
+        "Added `attention.config.json` so repo, site, and scan defaults come from one source of truth.",
+        "Added generated `site-config.json` and `changelog.json` data so the UI consumes build artifacts instead of hand-maintained duplicates.",
+        "Added a changelog parser and site-data build step, then wired them into local runs and GitHub Actions deploys.",
+        "Added hero release metadata and config-driven site copy on the frontend."
+      ]
+    },
+    {
+      "version": "0.4.0",
+      "date": "2026-06-26",
+      "title": "Signal controls and cleaner backend truth.",
+      "items": [
+        "Added severity filters, repo status cards, and a release trail to the dashboard UI.",
+        "Added richer report metadata including severity breakdown, total attention count, pulse state, and suppressed workflow-failure counts.",
+        "Suppressed older workflow failures when a newer successful rerun on the same workflow and branch already resolved the issue."
+      ]
+    },
+    {
+      "version": "0.3.0",
+      "date": "2026-06-22",
+      "title": "Pages deployment and modular scan engine.",
+      "items": [
+        "Rebuilt the project from a single workflow into a proper app with `public/`, `src/`, and `scripts/`.",
+        "Added GitHub Pages deployment, a local preview server, and automated report generation.",
+        "Added abstract visual design, modular scan logic, and GitHub issue sync for reports."
+      ]
+    },
+    {
+      "version": "0.1.0",
+      "date": "2026-04-23",
+      "title": "Initial scan workflow.",
+      "items": [
+        "Created the original workflow-only Attention Scan automation."
+      ]
+    }
+  ]
+}

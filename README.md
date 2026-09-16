@@ -43,11 +43,17 @@ Then open [http://localhost:3000](http://localhost:3000).
 - `scripts/build-site-data.js`: generates `public/data` artifacts from config and changelog
 - `scripts/run-scan.js`: CLI entrypoint used locally and in GitHub Actions
 - `public/`: website assets and generated report data
-- `.github/workflows/`: scan automation and Pages deploy
+- `docs/`: GitHub Pages site (copied from `public/`)
 - `CHANGELOG.md`: release history for repo-level changes
 
 ## Deploy
 
-- Push to GitHub.
-- Let `Deploy Pages` run on `main`.
-- GitHub Pages will serve the contents of `public/`.
+GitHub Pages serves `docs/` from the `main` branch (no GitHub Actions).
+After changing the site, copy `public/` into `docs/` and push:
+
+```bash
+rsync -a --delete public/ docs/
+git add docs
+git commit -m "chore: refresh GitHub Pages"
+git push
+```

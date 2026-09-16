@@ -1,0 +1,136 @@
+{
+  "meta": {
+    "repository": "Sebby1770/attention-scan-studio",
+    "generatedAt": "2026-09-08T12:00:00.000Z",
+    "mode": "demo",
+    "source": "Chamber rehearsal dataset",
+    "pulse": "critical"
+  },
+  "summary": "Rehearsal sweep: 8 contacts across pull requests, issues, and a red workflow. Live scans replace this the moment the repo has real pressure.",
+  "metrics": {
+    "openPullRequests": 4,
+    "openIssues": 3,
+    "immediateCount": 3,
+    "reviewQueueCount": 2,
+    "issueTriageCount": 1,
+    "workflowFailureCount": 1,
+    "staleCount": 1,
+    "totalAttentionCount": 8,
+    "severityBreakdown": {
+      "critical": 2,
+      "high": 3,
+      "medium": 2,
+      "low": 1
+    },
+    "suppressedWorkflowFailures": 1
+  },
+  "topActions": [
+    {
+      "id": "pr-88",
+      "title": "PR #88 · Deploy Pages is red on main",
+      "summary": "The GitHub Pages workflow failed twice. The public chamber is stale until this is green.",
+      "url": "https://github.com/Sebby1770/attention-scan-studio",
+      "severity": "critical",
+      "nextAction": "Open the failed jobs and rerun.",
+      "score": 118
+    },
+    {
+      "id": "pr-76",
+      "title": "PR #76 · Review requested, no human yet",
+      "summary": "A scoring change has been waiting three days with no review.",
+      "url": "https://github.com/Sebby1770/attention-scan-studio",
+      "severity": "high",
+      "nextAction": "Assign a reviewer.",
+      "score": 91
+    }
+  ],
+  "sections": {
+    "immediateAction": [
+      {
+        "id": "pr-88",
+        "title": "PR #88 · Deploy Pages is red on main",
+        "summary": "The GitHub Pages workflow failed twice. The public chamber is stale until this is green.",
+        "url": "https://github.com/Sebby1770/attention-scan-studio",
+        "severity": "critical",
+        "nextAction": "Open the failed jobs and rerun.",
+        "score": 118
+      },
+      {
+        "id": "issue-12",
+        "title": "Issue #12 · Token budget warnings in scan logs",
+        "summary": "The scanner is close to the REST budget on large orgs.",
+        "url": "https://github.com/Sebby1770/attention-scan-studio",
+        "severity": "critical",
+        "nextAction": "Lower concurrency or cache list endpoints.",
+        "score": 110
+      },
+      {
+        "id": "run-204",
+        "title": "Workflow · Attention Scan failed on main",
+        "summary": "The latest scheduled scan exited non-zero after a GitHub 502.",
+        "url": "https://github.com/Sebby1770/attention-scan-studio",
+        "severity": "high",
+        "nextAction": "Rerun the workflow.",
+        "score": 84
+      }
+    ],
+    "reviewQueue": [
+      {
+        "id": "pr-76",
+        "title": "PR #76 · Review requested, no human yet",
+        "summary": "A scoring change has been waiting three days with no review.",
+        "url": "https://github.com/Sebby1770/attention-scan-studio",
+        "severity": "high",
+        "nextAction": "Assign a reviewer.",
+        "score": 91
+      },
+      {
+        "id": "pr-71",
+        "title": "PR #71 · History snapshot schema tweak",
+        "summary": "Small, green, and ready. Just needs a second pair of eyes.",
+        "url": "https://github.com/Sebby1770/attention-scan-studio",
+        "severity": "medium",
+        "nextAction": "Review the diff.",
+        "score": 54
+      }
+    ],
+    "issueTriage": [
+      {
+        "id": "issue-9",
+        "title": "Issue #9 · Light theme contrast on pills",
+        "summary": "Amber on cream dips below 4.5:1 on the filter chips.",
+        "url": "https://github.com/Sebby1770/attention-scan-studio",
+        "severity": "medium",
+        "nextAction": "Retune the light palette.",
+        "score": 48
+      }
+    ],
+    "workflowFailures": [
+      {
+        "id": "run-198",
+        "title": "Workflow · Preview failed on feature/chamber",
+        "summary": "A branch preview is red. Main is green, so this is isolated.",
+        "url": "https://github.com/Sebby1770/attention-scan-studio",
+        "severity": "high",
+        "nextAction": "Inspect the branch job.",
+        "score": 77
+      }
+    ],
+    "staleWork": [
+      {
+        "id": "issue-4",
+        "title": "Issue #4 · Document the PPI geometry",
+        "summary": "Opened 19 days ago with no movement. The chamber now exists; the docs do not.",
+        "url": "https://github.com/Sebby1770/attention-scan-studio",
+        "severity": "low",
+        "nextAction": "Write the geometry note or close it.",
+        "score": 22
+      }
+    ]
+  },
+  "insights": [
+    "Two critical contacts sit on the origin of the scope.",
+    "Review queue is the second densest ring.",
+    "1 older workflow failure was suppressed because a newer success resolved it."
+  ]
+}
